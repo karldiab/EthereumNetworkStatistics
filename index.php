@@ -27,10 +27,10 @@
             <p style="text-align: center;">If you like this service, please consider disabling your ad blocker for this page. No pop-ups, I promise. ;)</p>
         </div>
         <div class="row">
-            <div class="animated zoomInRight col-md-6">
-                <canvas id="avgDiffChart" height="500px" width="600px"></canvas><br/>
+            <div class="animated zoomInRight col-md-12">
+                <canvas id="avgDiffChart" height="300px" width="600px"></canvas><br/>
             </div>
-            <div class="animated fadeIn col-md-6">
+            <div class="animated fadeIn col-md-0">
             </div>
         </div>
     </div>
@@ -40,8 +40,8 @@
             $avgDiffData = getColumn('karldiab_ethereum.blockAggregates','avgDiff');
             $xAxis = "var xAxis = [";
             foreach ($avgDiffData[0] as $xAxisPoint) {
-                echo "</script>" . $xAxisPoint . "<script>";
-                $xAxis .= $xAxisPoint . ",";
+                //echo "</script>" . $xAxisPoint . "<script>";
+                $xAxis .= "'". $xAxisPoint . "',";
             }
             $xAxis = substr($xAxis, 0, -1);
             $xAxis .= "];";
