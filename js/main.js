@@ -1,10 +1,12 @@
-function drawAvgDiffChart(labelsToPlot, dataToPlot) {
+function drawAvgDiffChart(labelsToPlot, dataToPlot1, dataToPlot2) {
+    
     var data = {
     labels: labelsToPlot,
     datasets: [
         {
-            label: "Average Difficulty (Billion)",
+            label: "Difficulty (Billion)",
             fill: false,
+            type: "line",
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
             borderColor: "rgba(75,192,192,1)",
@@ -21,8 +23,19 @@ function drawAvgDiffChart(labelsToPlot, dataToPlot) {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: dataToPlot,
+            data: dataToPlot1,
             spanGaps: false,
+        },
+        {
+            label: "Gas Limit",
+            type: "bar",
+            fillColor: "rgba(220,20,220,0.2)",
+            strokeColor: "rgba(220,20,220,1)",
+            pointColor: "rgba(220,20,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: dataToPlot2,
         }
     ]
     };
@@ -30,5 +43,6 @@ function drawAvgDiffChart(labelsToPlot, dataToPlot) {
     var myLineChart = new Chart(ctx, {
     type: 'line',
     data: data
+
     });
 }

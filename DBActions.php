@@ -14,24 +14,26 @@
     }
     
     mysql_select_db($db_user, $con);
-    function getColumn($table, $column) {
+    function getColumn($table, $column1, $column2) {
 
         // sending query
-        $result = mysql_query("SELECT {$column}, date FROM {$table};");
+        $result = mysql_query("SELECT $column1, $column2, date FROM $table;");
         //$count = mysql_num_rows($result);
         if (!$result) {
             die("Query to show fields from table failed");
         }
-        $columnArray = array();
+        $column1Array = array();
+        $column2Array = array();
         $datesArray = array();
         while($row=mysql_fetch_array($result))
         {
-        $columnArray[]=$row[$column];
+        $column1Array[]=$row[$column1];
+        $column2Array[]=$row[$column2];
         $datesArray[]=$row['date'];
         //echo $row[$column] . "</br>";
         }
         mysql_free_result($result);
-        return array($datesArray,$columnArray);
+        return array($datesArray,$column1Array,$column2Array);
     }
     //getColumn('karldiab_ethereum.blockAggregates','avgDiff');
 ?>

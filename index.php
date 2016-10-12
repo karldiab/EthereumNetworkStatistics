@@ -4,7 +4,6 @@
     <title>Ethereum Network Statistics</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +23,6 @@
         <div id="header">
             <div id="bigTitle"><h2>Ethereum Mining Calculator</h2></div>
             <div id="smallTitle"><h4>Ethereum Mining Calculator</h4></div>
-            <p style="text-align: center;">If you like this service, please consider disabling your ad blocker for this page. No pop-ups, I promise. ;)</p>
         </div>
         <div class="row">
             <div class="animated zoomInRight col-md-12">
@@ -37,7 +35,7 @@
     <script>
         <?php
             require_once('DBActions.php');
-            $avgDiffData = getColumn('karldiab_ethereum.blockAggregates','avgDiff');
+            $avgDiffData = getColumn('karldiab_ethereum.blockAggregates','avgDiff','avgGasLimit');
             $xAxis = "var xAxis = [";
             foreach ($avgDiffData[0] as $xAxisPoint) {
                 //echo "</script>" . $xAxisPoint . "<script>";
@@ -46,16 +44,23 @@
             $xAxis = substr($xAxis, 0, -1);
             $xAxis .= "];";
             echo $xAxis;
-            $yAxis = "var yAxis = [";
+            $yAxis1 = "var yAxis1 = [";
             foreach ($avgDiffData[1] as $yAxisPoint) {
-                $yAxis .= (string)((int)$yAxisPoint/1000000000) . ",";
+                $yAxis1 .= (string)((int)$yAxisPoint/1000000) . ",";
             }
-            $yAxis = substr($yAxis, 0, -1);
-            $yAxis .= "];";
-            echo $yAxis;
+            $yAxis1 = substr($yAxis1, 0, -1);
+            $yAxis1 .= "];";
+            echo $yAxis1;
+            $yAxis2 = "var yAxis2 = [";
+            foreach ($avgDiffData[2] as $yAxisPoint) {
+                $yAxis2 .= (string)((int)$yAxisPoint) . ",";
+            }
+            $yAxis2 = substr($yAxis2, 0, -1);
+            $yAxis2 .= "];";
+            echo $yAxis2;
         ?>
         //drawAvgDiffChart(xAxis, yAxis);
-        drawAvgDiffChart(xAxis, yAxis);
+        drawAvgDiffChart(xAxis, yAxis1, yAxis2);
     </script>
 </body>
 </html>
