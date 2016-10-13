@@ -4,7 +4,6 @@
     <title>Ethereum Network Statistics</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,40 +21,43 @@
 <body>
     <div class="container">  
         <div id="header">
-            <div id="bigTitle"><h2>Ethereum Mining Calculator</h2></div>
-            <div id="smallTitle"><h4>Ethereum Mining Calculator</h4></div>
-            <p style="text-align: center;">If you like this service, please consider disabling your ad blocker for this page. No pop-ups, I promise. ;)</p>
+            <div id="bigTitle"><h2>Ethereum Network Statistics</h2></div>
         </div>
         <div class="row">
-            <div class="animated zoomInRight col-md-12">
-                <canvas id="avgDiffChart" height="300px" width="600px"></canvas><br/>
+            <div class="col-md-6">
+                <canvas id="avgDiffChart"></canvas><br/>
             </div>
-            <div class="animated fadeIn col-md-0">
+            <div class="col-md-6">
+                <canvas id="dailyTxnsChart"></canvas><br/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="gasLimitChart"></canvas><br/>
+            </div>
+            <div class="col-md-6">
+                <canvas id="gasUsageChart"></canvas><br/>
             </div>
         </div>
     </div>
     <script>
         <?php
             require_once('DBActions.php');
-            $avgDiffData = getColumn('karldiab_ethereum.blockAggregates','avgDiff');
-            $xAxis = "var xAxis = [";
-            foreach ($avgDiffData[0] as $xAxisPoint) {
-                //echo "</script>" . $xAxisPoint . "<script>";
-                $xAxis .= "'". $xAxisPoint . "',";
-            }
-            $xAxis = substr($xAxis, 0, -1);
-            $xAxis .= "];";
-            echo $xAxis;
-            $yAxis = "var yAxis = [";
-            foreach ($avgDiffData[1] as $yAxisPoint) {
-                $yAxis .= (string)((int)$yAxisPoint/1000000000) . ",";
-            }
-            $yAxis = substr($yAxis, 0, -1);
-            $yAxis .= "];";
-            echo $yAxis;
+            echoJSPlotArraysBothAxis('avgDiff', 1000000000000);
         ?>
-        //drawAvgDiffChart(xAxis, yAxis);
         drawAvgDiffChart(xAxis, yAxis);
+        <?php
+            echoJSPlotArraysYAxisOnly('avgGasLimit', 1);
+        ?>
+        drawGasLimitChart(xAxis, yAxis);
+        <?php
+            echoJSPlotArraysYAxisOnly('avgGasUsed', 1);
+        ?>
+        drawGasUsedChart(xAxis, yAxis);
+        <?php
+            echoJSPlotArraysYAxisOnly('totalTxns', 1);
+        ?>
+        drawDailyTransactionsChart(xAxis, yAxis);
     </script>
 </body>
 </html>
