@@ -21,7 +21,7 @@
 <body>
     <div class="container">  
         <div id="header">
-            <div id="bigTitle"><h2>Ethereum Network Statistics</h2></div>
+            <div id="bigTitle"><h1>Ethereum Network Statistics</h1></div>
         </div>
         <div class="row">
             <div class="col-xs-12">
@@ -34,32 +34,54 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" id="avgBlockSizeChartContainer">
-                <canvas id="avgBlockSizeChart"></canvas><br/>
+            <div class="col-md-12">
+                <h3>Daily Transactions</h3>
+                <div id="totalTxnsChartContainer">
+                    <canvas id="totalTxnsChart"></canvas><br/>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6" id="avgDiffChartContainer">
-                <canvas id="avgDiffChart"></canvas><br/>
+            <div class="col-md-6">
+                <h4>Mining Difficulty</h4>
+                <div id="avgDiffChartContainer">
+                    <canvas id="avgDiffChart"></canvas><br/>
+                </div>
             </div>
-            <div class="col-md-6" id="totalTxnsChartContainer">
-                <canvas id="totalTxnsChart"></canvas><br/>
+            <div class="col-md-6">
+
+                <h4>Average Block Size</h4>
+                <div id="avgBlockSizeChartContainer">
+                    <canvas id="avgBlockSizeChart"></canvas><br/>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6" id="avgGasLimitChartContainer">
-                <canvas id="avgGasLimitChart"></canvas><br/>
+            <div class="col-md-6">
+                <h4>Gas Limit</h4>
+                <div id="avgGasLimitChartContainer">
+                    <canvas id="avgGasLimitChart"></canvas><br/>
+                </div>
             </div>
-            <div class="col-md-6" id="avgGasUsedChartContainer">
-                <canvas id="avgGasUsedChart"></canvas><br/>
+            <div class="col-md-6">
+                <h4>Gas Used Per Block</h4>
+                <div id="avgGasUsedChartContainer">
+                    <canvas id="avgGasUsedChart"></canvas><br/>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6" id="totalUnclesChartContainer">
-                <canvas id="totalUnclesChart"></canvas><br/>
+            <div class="col-md-6">
+                <h4>Uncles Per Day</h4>
+                <div id="totalUnclesChartContainer">
+                    <canvas id="totalUnclesChart"></canvas><br/>
+                </div>
             </div>
-            <div class="col-md-6" id="totalEmptyBlocksChartContainer">
-                <canvas id="totalEmptyBlocksChart"></canvas><br/>
+            <div class="col-md-6">
+                <h4>Empty Blocks Per Day</h4>
+                <div id="totalEmptyBlocksChartContainer">
+                    <canvas id="totalEmptyBlocksChart"></canvas><br/>
+                </div>
             </div>
         </div>
     </div>
