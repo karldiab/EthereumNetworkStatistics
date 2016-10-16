@@ -14,25 +14,32 @@
     }
     
     mysql_select_db($db_user, $con);
-    //fetches a column along with the ascoiated date
-    function getColumn($table, $column) {
+    /*fetches multiple columns from a table
+    //$table is the name of table as string
+    //$columns is a string formatted for SQL query
+    //ex $columns "cost, total, average" is valid
+    returns a 2d array, outter array are the columns
+    inner array are the values
+    */
+    function getColumns($table, $columns) {
 
         // sending query
-        $result = mysql_query("SELECT {$column}, date FROM {$table};");
+        $result = mysql_query("SELECT {$columns} FROM {$table};");
         //$count = mysql_num_rows($result);
         if (!$result) {
             die("Query to show fields from table failed");
         }
-        $columnArray = array();
-        $datesArray = array();
+        $columnsArray = array();
         while($row=mysql_fetch_array($result))
         {
-        $columnArray[]=$row[$column];
-        $datesArray[]=$row['date'];
-        //echo $row[$column] . "</br>";
+            $counter = 0;
+            foreach ($row as $cell) {
+                $columnsArray[$counter][] = $cell;
+                $counter++;
+            }
         }
         mysql_free_result($result);
-        return array($datesArray,$columnArray);
+        return $columnsArray;
     }
     //fetches a single column without the date
     function getSingleColumn($table, $column) {
@@ -52,38 +59,26 @@
         mysql_free_result($result);
         return array($columnArray);
     }
-    //echos the returned x and y columns as JS arrays to be passed to plotter
-    //$columnToFetch is obvious
-    //$division factor is the factor to divide the y column by for display
-    function echoJSPlotArraysBothAxis($columnToFetch, $divisionFactor) {
-        $columnData = getColumn('karldiab_ethereum.blockAggregates',$columnToFetch);
-        $xAxis = "var xAxis = [";
-        foreach ($columnData[0] as $xAxisPoint) {
-            //echo "</script>" . $xAxisPoint . "<script>";
-            $xAxis .= "'". $xAxisPoint . "',";
+    //fetches multiple columns from DB and puts results into multiple JS arrays
+    //Both args are arrays, must be same size
+    function echoJSArrays($columnsToFetch, $arrayNames) {
+        $columnString = "";
+        foreach ($columnsToFetch as $value) {
+            $columnString = $columnString . $value . ",";
         }
-        $xAxis = substr($xAxis, 0, -1);
-        $xAxis .= "];";
-        echo $xAxis;
-        $yAxis = "var yAxis = [";
-        foreach ($columnData[1] as $yAxisPoint) {
-            $yAxis .= (string)((int)$yAxisPoint/$divisionFactor) . ",";
+        $columnString = rtrim($columnString, ",");
+        $columnData = getColumns('karldiab_ethereum.blockAggregates',$columnString);
+        $counter = 0;
+        foreach ($arrayNames as $JSArray) {
+            $echoString = "var $JSArray = [";
+            foreach ($columnData[$counter] as $point) {
+                $echoString .= $point . ",";
+            }
+            $echoString = rtrim($echoString, ",");
+            $echoString .= "];";
+            echo $echoString;
+            $counter++;
         }
-        $yAxis = substr($yAxis, 0, -1);
-        $yAxis .= "];";
-        echo $yAxis;
     }
-    //fetches and echos a y column as JS arrays to be passed to plotter
-    //$columnToFetch is obvious
-    //$division factor is the factor to divide the y column by for display
-    function echoJSPlotArraysYAxisOnly($columnToFetch, $divisionFactor) {
-        $columnData = getSingleColumn('karldiab_ethereum.blockAggregates',$columnToFetch);
-        $yAxis = "var yAxis = [";
-        foreach ($columnData[0] as $yAxisPoint) {
-            $yAxis .= (string)((int)$yAxisPoint/$divisionFactor) . ",";
-        }
-        $yAxis = substr($yAxis, 0, -1);
-        $yAxis .= "];";
-        echo $yAxis;
-    }
+    
 ?>

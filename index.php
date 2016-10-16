@@ -24,6 +24,20 @@
             <div id="bigTitle"><h2>Ethereum Network Statistics</h2></div>
         </div>
         <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-primary">7 days</button>
+                <button class="btn btn-primary">30 days</button>
+                <button class="btn btn-primary">6 months</button>
+                <button class="btn btn-primary">1 year</button>
+                <button class="btn btn-primary">All</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="avgSizeChart"></canvas><br/>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <canvas id="avgDiffChart"></canvas><br/>
             </div>
@@ -39,25 +53,29 @@
                 <canvas id="gasUsageChart"></canvas><br/>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="dailyUnclesChart"></canvas><br/>
+            </div>
+            <div class="col-md-6">
+                <canvas id="dailyEmptyBlocksChart"></canvas><br/>
+            </div>
+        </div>
     </div>
     <script>
         <?php
             require_once('DBActions.php');
-            echoJSPlotArraysBothAxis('avgDiff', 1000000000000);
+            $columnsToFetch = array('date','avgDiff','avgGasLimit','avgGasUsed','totalTxns','totalUncles','totalEmptyBlocks','avgBlockSize');
+            //using column names as JS array names, so reusing $columnsToFetch
+            echoJSArrays($columnsToFetch, $columnsToFetch);
         ?>
-        drawAvgDiffChart(xAxis, yAxis);
-        <?php
-            echoJSPlotArraysYAxisOnly('avgGasLimit', 1);
-        ?>
-        drawGasLimitChart(xAxis, yAxis);
-        <?php
-            echoJSPlotArraysYAxisOnly('avgGasUsed', 1);
-        ?>
-        drawGasUsedChart(xAxis, yAxis);
-        <?php
-            echoJSPlotArraysYAxisOnly('totalTxns', 1);
-        ?>
-        drawDailyTransactionsChart(xAxis, yAxis);
+        drawAvgDiffChart(date, avgDiff);
+        drawGasLimitChart(date, avgGasLimit);
+        drawGasUsedChart(date, avgGasUsed);
+        drawDailyTransactionsChart(date, totalTxns);
+        drawDailyUnclesChart(date, totalUncles);
+        drawDailyEmptyBlocksChart(date, totalEmptyBlocks);
+        drawAverageSizeChart(date, avgBlockSize);
     </script>
 </body>
 </html>

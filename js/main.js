@@ -1,9 +1,12 @@
 function drawAvgDiffChart(labelsToPlot, dataToPlot) {
+    for (var i =0;i<dataToPlot.length;i++) {
+        dataToPlot[i] = dataToPlot[i]/1000000000000;
+    }
     var data = {
     labels: labelsToPlot,
     datasets: [
         {
-            label: "Average Difficulty (Billion)",
+            label: "Average Difficulty (Trillion)",
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
@@ -37,7 +40,7 @@ function drawGasLimitChart(labelsToPlot, dataToPlot) {
     labels: labelsToPlot,
     datasets: [
         {
-            label: "Daily Transactions",
+            label: "Gas Limit",
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(255, 50, 50,0.4)",
@@ -74,18 +77,18 @@ function drawGasUsedChart(labelsToPlot, dataToPlot) {
             label: "Gas Used Per Block",
             fill: false,
             lineTension: 0.1,
-            backgroundColor: "rgba(80,209,0,0.4)",
-            borderColor: "rgba(80,209,0,1)",
+            backgroundColor: "rgba(250, 255, 0,0.4)",
+            borderColor: "rgba(250, 255, 0,1)",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(80,209,0,1)",
+            pointBorderColor: "rgba(250, 255, 0,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(80,209,0,1)",
-            pointHoverBorderColor: "rgba(80,209,0,1)",
+            pointHoverBackgroundColor: "rgba(250, 255, 0,1)",
+            pointHoverBorderColor: "rgba(250, 255, 0,1)",
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
@@ -129,6 +132,108 @@ function drawDailyTransactionsChart(labelsToPlot, dataToPlot) {
     ]
     };
     var ctx = document.getElementById("dailyTxnsChart").getContext("2d");
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data
+    });
+}
+function drawDailyUnclesChart(labelsToPlot, dataToPlot) {
+    var data = {
+    labels: labelsToPlot,
+    datasets: [
+        {
+            label: "Uncles Per Day",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(80,209,0,0.4)",
+            borderColor: "rgba(80,209,0,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(80,209,0,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(80,209,0,1)",
+            pointHoverBorderColor: "rgba(80,209,0,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataToPlot,
+            spanGaps: false,
+        }
+    ]
+    };
+    var ctx = document.getElementById("dailyUnclesChart").getContext("2d");
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data
+    });
+}
+function drawDailyEmptyBlocksChart(labelsToPlot, dataToPlot) {
+    var data = {
+    labels: labelsToPlot,
+    datasets: [
+        {
+            label: "Empty Blocks Per Day",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(80,209,0,0.4)",
+            borderColor: "rgba(80,209,0,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(80,209,0,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(80,209,0,1)",
+            pointHoverBorderColor: "rgba(80,209,0,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataToPlot,
+            spanGaps: false,
+        }
+    ]
+    };
+    var ctx = document.getElementById("dailyEmptyBlocksChart").getContext("2d");
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data
+    });
+}
+function drawAverageSizeChart(labelsToPlot, dataToPlot) {
+    var data = {
+    labels: labelsToPlot,
+    datasets: [
+        {
+            label: "Average Block Size",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(80,209,0,0.4)",
+            borderColor: "rgba(80,209,0,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(80,209,0,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(80,209,0,1)",
+            pointHoverBorderColor: "rgba(80,209,0,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataToPlot,
+            spanGaps: false,
+        }
+    ]
+    };
+    var ctx = document.getElementById("avgSizeChart").getContext("2d");
     var myLineChart = new Chart(ctx, {
     type: 'line',
     data: data
