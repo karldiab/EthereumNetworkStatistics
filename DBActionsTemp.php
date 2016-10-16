@@ -67,11 +67,20 @@
         $columnString = rtrim($columnString, ",");
         $columnData = getColumns('karldiab_ethereum.blockAggregates',$columnString);
         foreach ($columnsToFetch as $JSArray) {
-            echo "</script> $JSArray array contents: ";
+            echo "</script> counter = $counter and $JSArray array contents: ";
             $echoString = "var $JSArray = [";
-            foreach ($columnData[$JSArray] as $point) {
-                echo $point . " , is this point numeric? : " . is_numeric($point) . " ";
-                $echoString .= $point . ",";
+            /*check to see if the first result of the column is a number or not
+            if its not, treat it as a string*/
+            if is_numeric($columnData[$JSArray][0]) {
+                foreach ($columnData[$JSArray] as $point) {
+                    echo $point . " , ";
+                    $echoString .= $point . ",";
+                }
+            } else {
+                foreach ($columnData[$JSArray] as $point) {
+                    echo $point . " , ";
+                    $echoString .= "'" . $point . "'" . ",";
+                }
             }
             echo "</br><script>";
             $echoString = rtrim($echoString, ",");
