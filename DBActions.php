@@ -14,6 +14,7 @@ die('Could not connect: ' . mysql_error());
 }
 
 mysql_select_db($db_user, $con);
+
 /*fetches multiple columns from a table
 //$table is the name of table as string
 //$columns is a string formatted for SQL query
@@ -85,9 +86,9 @@ function echoJSArrays($columnsToFetch) {
     }
 }
 //Takes all of the JS value arrays and places them
-//into another array, axisArray
-function echoJSAxisArray($columnsArray) {
-    $echoString2 = "var axisArray = [";
+//into another array, axisArrayRaw
+function echoJSAxisArrayRaw($columnsArray) {
+    $echoString2 = "var axisArrayRaw = [";
     foreach ($columnsArray as $value) {
         //echo "</script>\$value is $value<script>";
         $echoString2 .= $value .  ",";

@@ -23,14 +23,22 @@
         <div id="header">
             <div id="bigTitle"><h1>Ethereum Network Statistics</h1></div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button class="btn btn-primary" onclick="drawGraphs(7, axisArray, columnNames, 1)">7 days</button>
-                <button class="btn btn-primary" onclick="drawGraphs(30, axisArray, columnNames, 1)">30 days</button>
-                <button class="btn btn-primary" onclick="drawGraphs(90, axisArray, columnNames, 1)">3 months</button>
-                <button class="btn btn-primary" onclick="drawGraphs(180, axisArray, columnNames, 1)">6 months</button>
-                <button class="btn btn-primary" onclick="drawGraphs(365, axisArray, columnNames, 1)">1 year</button>
-                <button class="btn btn-primary" onclick="drawGraphs(-1, axisArray, columnNames, 1)">All</button>
+        <div class="row" id="controlPanel">
+            <div class="col-sm-6">
+                <h4>Time Period</h4>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(7)">7 days</button>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(30)">30 days</button>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(90)">3 months</button>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(180)">6 months</button>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(365)">1 year</button>
+                <button class="btn btn-primary" onclick="changeNumberOfDaysAndDraw(-1)">All</button>
+            </div>
+            <div class="col-sm-6">
+                <h4>Number of Data Points</h4>
+                <button class="btn btn-primary" onclick="changeGranularityAndDraw(30)">30</button>
+                <button class="btn btn-success" onclick="changeGranularityAndDraw(90)">90</button>
+                <button class="btn btn-warning" onclick="changeGranularityAndDraw(180)">180</button>
+                <button class="btn btn-danger" onclick="changeGranularityAndDraw(-1)">All</button>
             </div>
         </div>
         <div class="row">
@@ -91,13 +99,13 @@
             $columnsToFetch = array('date','avgDiff','avgGasLimit','avgGasUsed','totalTxns','totalUncles','totalEmptyBlocks','avgBlockSize');
             //creates a JS array for each column queried
             echoJSArrays($columnsToFetch);
-            //creates JS 2D array axisArray
-            echoJSAxisArray($columnsToFetch);
+            //creates JS 2D array axisArrayRaw
+            echoJSAxisArrayRaw($columnsToFetch);
             //creates columnNames JS array
             echoJSColumnNamesArray($columnsToFetch);
         ?>
         //console.log(columnNames);
-        drawGraphs(30, axisArray, columnNames);
+        changeNumberOfDaysAndDraw(-1);
     </script>
 </body>
 </html>

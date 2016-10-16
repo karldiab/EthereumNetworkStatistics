@@ -1,7 +1,67 @@
+var numberOfDays = 30;
+var granularity = 90;
+var axisArray = [];
+
+function changeNumberOfDaysAndDraw(newNumber) {
+    if (newNumber < 1) {
+        numberOfDays = axisArrayRaw[0].length;
+    } else {
+        numberOfDays = newNumber;
+    }
+    changeGranularityAndDraw(granularity);
+}
+function changeGranularityAndDraw(newGranularity) {
+    
+    if (newGranularity < 1 || newGranularity >= numberOfDays) {
+        granularity = numberOfDays;
+        for (i = 0; i<axisArrayRaw.length; i++) {
+            axisArray[i] = axisArrayRaw[i].slice(axisArrayRaw[i].length - numberOfDays);
+        }
+        drawGraphs(1);
+        return;
+    } else {
+        granularity = newGranularity;
+    }
+    axisArray = [];
+    var daysToAverage = Math.floor(numberOfDays/granularity);
+    //set the first set of axis data to 0
+    for (var j = 0;j<axisArrayRaw.length;j++) {
+        console.log("j equals " + j);
+        axisArray[j] = [0];
+    }
+    //start at the end of the array
+    var granularityCounter = 0;
+    for (var i = axisArrayRaw[0].length-1;i >= axisArrayRaw[0].length-numberOfDays; i--) {
+        for (var j = 1;j<axisArrayRaw.length;j++) {
+            axisArray[j][0] += axisArrayRaw[j][i];
+        }
+        if (granularityCounter == daysToAverage) {
+            for (var j = 1;j<axisArrayRaw.length;j++) {
+                //averages all of the data inserted
+                axisArray[j][0] /= daysToAverage;
+                //insert 0 to front of all axis arrays
+                axisArray[j].unshift(0);
+            }
+            //set the date for the average to be in the middle of the date range
+            axisArray[0][0] = axisArrayRaw[0][i+granularityCounter/2];
+            axisArray[0].unshift('');
+            //set to -1 because it will increment after
+            granularityCounter = -1;
+        }
+        granularityCounter++;
+    }
+    //if there is leftover data, throw it away
+    if (granularityCounter != 0) {
+        for (var j = 0;j<axisArray.length;j++) {
+            axisArray[j].shift();
+        }
+    }
+    drawGraphs(1);
+}
 function drawLineChart(data, columnName, redraw) {
 
     var id = columnName + "Chart";
-    console.log("id is "+id);
+    //console.log("id is "+id);
     if (redraw) {
         document.getElementById(id).remove();
         document.getElementById(id + "Container").innerHTML = "<canvas id='"+id+"'></canvas><br/>";
@@ -12,19 +72,16 @@ function drawLineChart(data, columnName, redraw) {
     data: data
     });
 }
-function drawGraphs(numberOfDays, axisArray, columnNames, redraw) {
-    if (numberOfDays < 1) {
-        numberOfDays = axisArray[0].length;
-    }
-    var graphDataArray = generateGraphData(numberOfDays, axisArray);
+function drawGraphs(redraw) {
+    var graphDataArray = generateGraphData();
     for (var i =0;i<graphDataArray.length;i++) {
         drawLineChart(graphDataArray[i], columnNames[i+1], redraw)
     }
 }
-function generateGraphData(numberOfDays, axisArray) {
+function generateGraphData() {
     var graphDataArray = [
     {
-        labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+        labels: axisArray[0],
         datasets: [
             {
                 label: "Average Difficulty (Trillion)",
@@ -45,13 +102,13 @@ function generateGraphData(numberOfDays, axisArray) {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: axisArray[1].slice(axisArray[1].length - numberOfDays),
+                data: axisArray[1],
                 spanGaps: false,
             }
         ]
         },
         {
-            labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+            labels: axisArray[0],
             datasets: [
                 {
                     label: "Gas Limit",
@@ -72,13 +129,13 @@ function generateGraphData(numberOfDays, axisArray) {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: axisArray[2].slice(axisArray[2].length - numberOfDays),
+                    data: axisArray[2],
                     spanGaps: false,
                 }
             ]
             },
             {
-                labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+                labels: axisArray[0],
                 datasets: [
                     {
                         label: "Gas Used Per Block",
@@ -99,13 +156,13 @@ function generateGraphData(numberOfDays, axisArray) {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: axisArray[3].slice(axisArray[3].length - numberOfDays),
+                        data: axisArray[3],
                         spanGaps: false,
                     }
                 ]
                 },
                 {
-                    labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+                    labels: axisArray[0],
                     datasets: [
                         {
                             label: "Daily Transactions",
@@ -126,13 +183,13 @@ function generateGraphData(numberOfDays, axisArray) {
                             pointHoverBorderWidth: 2,
                             pointRadius: 1,
                             pointHitRadius: 10,
-                            data: axisArray[4].slice(axisArray[4].length - numberOfDays),
+                            data: axisArray[4],
                             spanGaps: false,
                         }
                     ]
                     },
                     {
-                    labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+                    labels: axisArray[0],
                     datasets: [
                         {
                             label: "Uncles Per Day",
@@ -153,13 +210,13 @@ function generateGraphData(numberOfDays, axisArray) {
                             pointHoverBorderWidth: 2,
                             pointRadius: 1,
                             pointHitRadius: 10,
-                            data: axisArray[5].slice(axisArray[5].length - numberOfDays),
+                            data: axisArray[5],
                             spanGaps: false,
                         }
                     ]
                     },
                     {
-                        labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+                        labels: axisArray[0],
                         datasets: [
                             {
                                 label: "Empty Blocks Per Day",
@@ -180,13 +237,13 @@ function generateGraphData(numberOfDays, axisArray) {
                                 pointHoverBorderWidth: 2,
                                 pointRadius: 1,
                                 pointHitRadius: 10,
-                                data: axisArray[6].slice(axisArray[6].length - numberOfDays),
+                                data: axisArray[6],
                                 spanGaps: false,
                             }
                         ]
                         },
                         {
-                            labels: axisArray[0].slice(axisArray[0].length - numberOfDays),
+                            labels: axisArray[0],
                             datasets: [
                                 {
                                     label: "Average Block Size",
@@ -207,7 +264,7 @@ function generateGraphData(numberOfDays, axisArray) {
                                     pointHoverBorderWidth: 2,
                                     pointRadius: 1,
                                     pointHitRadius: 10,
-                                    data: axisArray[7].slice(axisArray[7].length - numberOfDays),
+                                    data: axisArray[7],
                                     spanGaps: false,
                                 }
                             ]
