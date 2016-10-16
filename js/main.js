@@ -239,3 +239,12 @@ function drawAverageSizeChart(labelsToPlot, dataToPlot) {
     data: data
     });
 }
+function drawGraphs(numberOfDays, axisArray) {
+        drawAvgDiffChart(axisArray[0], axisArray[1]);
+        drawGasLimitChart(axisArray[0], axisArray[2]);
+        drawGasUsedChart(axisArray[0], axisArray[3]);
+        drawDailyTransactionsChart(axisArray[0], axisArray[4]);
+        drawDailyUnclesChart(axisArray[0], axisArray[5]);
+        drawDailyEmptyBlocksChart(axisArray[0], axisArray[6]);
+        drawAverageSizeChart(axisArray[0], axisArray[7]);
+}

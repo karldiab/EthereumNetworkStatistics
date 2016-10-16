@@ -25,11 +25,12 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <button class="btn btn-primary">7 days</button>
-                <button class="btn btn-primary">30 days</button>
-                <button class="btn btn-primary">6 months</button>
-                <button class="btn btn-primary">1 year</button>
-                <button class="btn btn-primary">All</button>
+                <button class="btn btn-primary" onclick="drawGraphs(7)">7 days</button>
+                <button class="btn btn-primary" onclick="drawGraphs(30)">30 days</button>
+                <button class="btn btn-primary" onclick="drawGraphs(90)">3 months</button>
+                <button class="btn btn-primary" onclick="drawGraphs(180)">6 months</button>
+                <button class="btn btn-primary" onclick="drawGraphs(365)">1 year</button>
+                <button class="btn btn-primary" onclick="drawGraphs(-1)">All</button>
             </div>
         </div>
         <div class="row">
@@ -67,14 +68,9 @@
             require_once('DBActions.php');
             $columnsToFetch = array('date','avgDiff','avgGasLimit','avgGasUsed','totalTxns','totalUncles','totalEmptyBlocks','avgBlockSize');
             echoJSArrays($columnsToFetch);
+            echoJSAxisArray($columnsToFetch);
         ?>
-        drawAvgDiffChart(date, avgDiff);
-        drawGasLimitChart(date, avgGasLimit);
-        drawGasUsedChart(date, avgGasUsed);
-        drawDailyTransactionsChart(date, totalTxns);
-        drawDailyUnclesChart(date, totalUncles);
-        drawDailyEmptyBlocksChart(date, totalEmptyBlocks);
-        drawAverageSizeChart(date, avgBlockSize);
+        drawGraphs(30, axisArray);
     </script>
 </body>
 </html>
