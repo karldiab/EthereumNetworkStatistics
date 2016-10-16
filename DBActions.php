@@ -25,6 +25,7 @@
 
         // sending query
         $result = mysql_query("SELECT {$columns} FROM {$table};");
+        //echo "</script> SQL query:  SELECT {$columns} FROM {$table}; <script>";
         //$count = mysql_num_rows($result);
         if (!$result) {
             die("Query to show fields from table failed");
@@ -70,10 +71,13 @@
         $columnData = getColumns('karldiab_ethereum.blockAggregates',$columnString);
         $counter = 0;
         foreach ($arrayNames as $JSArray) {
+            echo "</script> counter = $counter and $JSArray array contents: ";
             $echoString = "var $JSArray = [";
             foreach ($columnData[$counter] as $point) {
+                echo $point . " , ";
                 $echoString .= $point . ",";
             }
+            echo "</br><script>";
             $echoString = rtrim($echoString, ",");
             $echoString .= "];";
             echo $echoString;
