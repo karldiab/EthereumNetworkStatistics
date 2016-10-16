@@ -77,7 +77,6 @@
                     $echoString .= $point . ",";
                 }
                 echo $point . " , ";
-                $echoString .= $point . ",";
             }
             echo "</br><script>";
             $echoString = rtrim($echoString, ",");
