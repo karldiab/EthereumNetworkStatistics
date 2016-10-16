@@ -25,41 +25,41 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <button class="btn btn-primary" onclick="drawGraphs(7)">7 days</button>
-                <button class="btn btn-primary" onclick="drawGraphs(30)">30 days</button>
-                <button class="btn btn-primary" onclick="drawGraphs(90)">3 months</button>
-                <button class="btn btn-primary" onclick="drawGraphs(180)">6 months</button>
-                <button class="btn btn-primary" onclick="drawGraphs(365)">1 year</button>
-                <button class="btn btn-primary" onclick="drawGraphs(-1)">All</button>
+                <button class="btn btn-primary" onclick="drawGraphs(7, axisArray, columnNames, 1)">7 days</button>
+                <button class="btn btn-primary" onclick="drawGraphs(30, axisArray, columnNames, 1)">30 days</button>
+                <button class="btn btn-primary" onclick="drawGraphs(90, axisArray, columnNames, 1)">3 months</button>
+                <button class="btn btn-primary" onclick="drawGraphs(180, axisArray, columnNames, 1)">6 months</button>
+                <button class="btn btn-primary" onclick="drawGraphs(365, axisArray, columnNames, 1)">1 year</button>
+                <button class="btn btn-primary" onclick="drawGraphs(-1, axisArray, columnNames, 1)">All</button>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <canvas id="avgSizeChart"></canvas><br/>
+            <div class="col-md-12" id="avgBlockSizeChartContainer">
+                <canvas id="avgBlockSizeChart"></canvas><br/>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" id="avgDiffChartContainer">
                 <canvas id="avgDiffChart"></canvas><br/>
             </div>
-            <div class="col-md-6">
-                <canvas id="dailyTxnsChart"></canvas><br/>
+            <div class="col-md-6" id="totalTxnsChartContainer">
+                <canvas id="totalTxnsChart"></canvas><br/>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <canvas id="gasLimitChart"></canvas><br/>
+            <div class="col-md-6" id="avgGasLimitChartContainer">
+                <canvas id="avgGasLimitChart"></canvas><br/>
             </div>
-            <div class="col-md-6">
-                <canvas id="gasUsageChart"></canvas><br/>
+            <div class="col-md-6" id="avgGasUsedChartContainer">
+                <canvas id="avgGasUsedChart"></canvas><br/>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <canvas id="dailyUnclesChart"></canvas><br/>
+            <div class="col-md-6" id="totalUnclesChartContainer">
+                <canvas id="totalUnclesChart"></canvas><br/>
             </div>
-            <div class="col-md-6">
-                <canvas id="dailyEmptyBlocksChart"></canvas><br/>
+            <div class="col-md-6" id="totalEmptyBlocksChartContainer">
+                <canvas id="totalEmptyBlocksChart"></canvas><br/>
             </div>
         </div>
     </div>
@@ -67,10 +67,15 @@
         <?php
             require_once('DBActions.php');
             $columnsToFetch = array('date','avgDiff','avgGasLimit','avgGasUsed','totalTxns','totalUncles','totalEmptyBlocks','avgBlockSize');
+            //creates a JS array for each column queried
             echoJSArrays($columnsToFetch);
+            //creates JS 2D array axisArray
             echoJSAxisArray($columnsToFetch);
+            //creates columnNames JS array
+            echoJSColumnNamesArray($columnsToFetch);
         ?>
-        drawGraphs(30, axisArray);
+        //console.log(columnNames);
+        drawGraphs(30, axisArray, columnNames);
     </script>
 </body>
 </html>

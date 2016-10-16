@@ -97,4 +97,15 @@ function echoJSAxisArray($columnsArray) {
     
     echo $echoString2;
 }
+//creates a JS array containing the names of the columns fetched
+function echoJSColumnNamesArray($columnNames) {
+    $echoString2 = "var columnNames = [";
+    foreach ($columnNames as $value) {
+        //echo "</script>\$value is $value<script>";
+        $echoString2 .= "'".$value .  "',";
+    }
+    $echoString2 = rtrim($echoString2, ",");
+    $echoString2 .= "];";
+    echo $echoString2;
+}
 ?>
