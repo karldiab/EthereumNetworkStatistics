@@ -66,8 +66,7 @@
         <?php
             require_once('DBActions.php');
             $columnsToFetch = array('date','avgDiff','avgGasLimit','avgGasUsed','totalTxns','totalUncles','totalEmptyBlocks','avgBlockSize');
-            //using column names as JS array names, so reusing $columnsToFetch
-            echoJSArrays($columnsToFetch, $columnsToFetch);
+            echoJSArrays($columnsToFetch);
         ?>
         drawAvgDiffChart(date, avgDiff);
         drawGasLimitChart(date, avgGasLimit);

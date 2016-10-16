@@ -31,12 +31,9 @@
             die("Query to show fields from table failed");
         }
         $columnsArray = array();
-        while($row=mysql_fetch_array($result))
-        {
-            $counter = 0;
-            foreach ($row as $cell) {
-                $columnsArray[$counter][] = $cell;
-                $counter++;
+        while ($row = mysql_fetch_assoc($result)) {
+            foreach ($row as $key => $cell) {
+                $columnsArray[$key][] = $cell;
             }
         }
         mysql_free_result($result);
@@ -62,18 +59,17 @@
     }
     //fetches multiple columns from DB and puts results into multiple JS arrays
     //Both args are arrays, must be same size
-    function echoJSArrays($columnsToFetch, $arrayNames) {
+    function echoJSArrays($columnsToFetch) {
         $columnString = "";
         foreach ($columnsToFetch as $value) {
             $columnString = $columnString . $value . ",";
         }
         $columnString = rtrim($columnString, ",");
         $columnData = getColumns('karldiab_ethereum.blockAggregates',$columnString);
-        $counter = 0;
-        foreach ($arrayNames as $JSArray) {
+        foreach ($columnsToFetch as $JSArray) {
             echo "</script> counter = $counter and $JSArray array contents: ";
             $echoString = "var $JSArray = [";
-            foreach ($columnData[$counter] as $point) {
+            foreach ($columnData[$JSArray] as $point) {
                 echo $point . " , ";
                 $echoString .= $point . ",";
             }
@@ -81,7 +77,6 @@
             $echoString = rtrim($echoString, ",");
             $echoString .= "];";
             echo $echoString;
-            $counter++;
         }
     }
     
