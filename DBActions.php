@@ -70,7 +70,13 @@
             echo "</script> $JSArray array contents: ";
             $echoString = "var $JSArray = [";
             foreach ($columnData[$JSArray] as $point) {
-                echo $point . " , is this point numeric? : " . is_numeric($point) . " ";
+                if (!strcmp($JSArray,"date")) {
+                    echo " This is the date column! :";
+                    $echoString .= "'" . $point . "' ,";
+                } else {
+                    $echoString .= $point . ",";
+                }
+                echo $point . " , ";
                 $echoString .= $point . ",";
             }
             echo "</br><script>";
