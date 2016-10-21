@@ -1,5 +1,6 @@
 var numberOfDays = 30;
 var granularity = 90;
+var intentedGranularity = 90;
 var axisArray = [];
 
 function changeNumberOfDaysAndDraw(newNumber) {
@@ -8,12 +9,18 @@ function changeNumberOfDaysAndDraw(newNumber) {
     } else {
         numberOfDays = newNumber;
     }
-    changeGranularityAndDraw(granularity);
+    if (numberOfDays > granularity) {
+        console.log("intendedGranularity = " + intentedGranularity);
+        changeGranularityAndDraw(intentedGranularity);
+    } else {
+        changeGranularityAndDraw(granularity);
+    }
+
 }
 function changeGranularityAndDraw(newGranularity) {
-    
+    intentedGranularity = newGranularity;
     if (newGranularity < 1 || newGranularity >= numberOfDays) {
-        granularity = numberOfDays;
+        //granularity = numberOfDays;
         for (i = 0; i<axisArrayRaw.length; i++) {
             axisArray[i] = axisArrayRaw[i].slice(axisArrayRaw[i].length - numberOfDays);
         }
@@ -26,7 +33,7 @@ function changeGranularityAndDraw(newGranularity) {
     var daysToAverage = Math.floor(numberOfDays/granularity);
     //set the first set of axis data to 0
     for (var j = 0;j<axisArrayRaw.length;j++) {
-        console.log("j equals " + j);
+        //console.log("j equals " + j);
         axisArray[j] = [0];
     }
     //start at the end of the array
@@ -43,7 +50,9 @@ function changeGranularityAndDraw(newGranularity) {
                 axisArray[j].unshift(0);
             }
             //set the date for the average to be in the middle of the date range
-            axisArray[0][0] = axisArrayRaw[0][i+granularityCounter/2];
+            axisArray[0][0] = axisArrayRaw[0][Math.round(i+granularityCounter/2)];
+            //console.log("axisArray[0][0] equals " + axisArray[0][0]);
+            //console.log("i+granularityCounter/2 equals " + (i+granularityCounter/2));
             axisArray[0].unshift('');
             //set to -1 because it will increment after
             granularityCounter = -1;
