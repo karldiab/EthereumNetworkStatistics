@@ -59,21 +59,23 @@ function getSingleColumn($table, $column) {
     return array($columnArray);
 }
 //fetches multiple columns from DB and puts results into multiple JS arrays
-//Both args are arrays, must be same size
 function echoJSArrays($columnsToFetch) {
     $columnString = "";
     foreach ($columnsToFetch as $value) {
         $columnString = $columnString . $value . ",";
     }
     $columnString = rtrim($columnString, ",");
-    $columnData = getColumns('karldiab_ethereum.blockAggregates',$columnString);
+    $columnData = getColumns('karldiab_ethereum.blockAggregatesWeb',$columnString);
     foreach ($columnsToFetch as $JSArray) {
         //echo "</script> $JSArray array contents: ";
         $echoString = "var $JSArray = [";
         foreach ($columnData[$JSArray] as $point) {
             if (!strcmp($JSArray,"date")) {
-                //echo " This is the date column! :";
+                //if its the date column, make js array an array of strings
                 $echoString .= "'" . $point . "' ,";
+            } else if (!strcmp($JSArray,"avgDiff")) {
+                //if its the aveGiff column, divide by 1T to make it human readable
+                $echoString .= round($point/1000000000000, 1, PHP_ROUND_HALF_UP) . ",";
             } else {
                 $echoString .= $point . ",";
             }

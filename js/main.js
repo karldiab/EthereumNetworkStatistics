@@ -19,6 +19,8 @@ function changeNumberOfDaysAndDraw(newNumber) {
 }
 function changeGranularityAndDraw(newGranularity) {
     intentedGranularity = newGranularity;
+    axisArray = null;
+    axisArray = [];
     if (newGranularity < 1 || newGranularity >= numberOfDays) {
         //granularity = numberOfDays;
         for (i = 0; i<axisArrayRaw.length; i++) {
@@ -29,7 +31,6 @@ function changeGranularityAndDraw(newGranularity) {
     } else {
         granularity = newGranularity;
     }
-    axisArray = [];
     var daysToAverage = Math.floor(numberOfDays/granularity);
     //set the first set of axis data to 0
     for (var j = 0;j<axisArrayRaw.length;j++) {
@@ -68,15 +69,16 @@ function changeGranularityAndDraw(newGranularity) {
     drawGraphs(1);
 }
 function drawLineChart(data, columnName, redraw) {
-
+    var ctx = null;
+    var myLineChart = null;
     var id = columnName + "Chart";
     //console.log("id is "+id);
     if (redraw) {
         document.getElementById(id).remove();
         document.getElementById(id + "Container").innerHTML = "<canvas id='"+id+"'></canvas><br/>";
     }
-    var ctx = document.getElementById(id).getContext("2d");
-    var myLineChart = new Chart(ctx, {
+    ctx = document.getElementById(id).getContext("2d");
+    myLineChart = new Chart(ctx, {
     type: 'line',
     data: data
     });
