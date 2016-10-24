@@ -43,17 +43,18 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3>Daily Transactions</h3>
-                <div id="totalTxnsChartContainer">
-                    <canvas id="totalTxnsChart"></canvas><br/>
+                <h4>Mining Difficulty</h4>
+                <div id="avgDiffChartContainer">
+                    <canvas id="avgDiffChart"></canvas><br/>
                 </div>
+
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h4>Mining Difficulty</h4>
-                <div id="avgDiffChartContainer">
-                    <canvas id="avgDiffChart"></canvas><br/>
+                <h3>Daily Transactions</h3>
+                <div id="totalTxnsChartContainer">
+                    <canvas id="totalTxnsChart"></canvas><br/>
                 </div>
             </div>
             <div class="col-md-6">

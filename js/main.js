@@ -96,9 +96,9 @@ function generateGraphData() {
         datasets: [
             {
                 label: "Average Difficulty (Trillion)",
-                fill: false,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
+                fill: true,
+                lineTension: 0.15,
+                backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "rgba(75,192,192,1)",
                 borderCapStyle: 'butt',
                 borderDash: [],
